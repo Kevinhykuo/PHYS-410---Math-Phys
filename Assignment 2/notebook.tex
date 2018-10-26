@@ -1,0 +1,464 @@
+
+
+
+
+    
+\documentclass[11pt]{article}
+    
+    \usepackage{parskip}
+    \setcounter{secnumdepth}{0} %Suppress section numbers
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter}
+    \usepackage{needspace}
+    \usepackage{minted}
+    \usemintedstyle{jupyter_python}
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    \let\Oldtex\TeX     % provide compatibility with nbconvert <= 5.3.1
+    \let\Oldlatex\LaTeX % pre-included in nbconvert > 5.3.1 so redundant
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Assignment 2}
+    
+    
+    
+% Pygments definitions
+    
+    \makeatletter
+    \newcommand*\@iflatexlater{\@ifl@t@r\fmtversion}
+    \@iflatexlater{2016/03/01}{
+	    \newcommand{\wordboundary}{4095}}{
+	    \newcommand{\wordboundary}{255}}
+    \makeatother
+
+    \newif\ifcode
+    \codefalse
+    \definecolor{Grey}{rgb}{0.40,0.40,0.40}
+    %If using XeLaTeX, use magic to not highlight . operators with purple.
+    \ifdefined\XeTeXcharclass
+    \XeTeXinterchartokenstate = 1
+    \newXeTeXintercharclass \mycharclassGrey
+    \XeTeXcharclass `. \mycharclassGrey
+    \XeTeXinterchartoks 0 \mycharclassGrey   = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \wordboundary \mycharclassGrey = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \mycharclassGrey 0   = {\egroup}
+    \XeTeXinterchartoks \mycharclassGrey \wordboundary = {\egroup}
+    \fi %end magical operator highlighting
+    %End Reconfigured Pygments
+    
+   
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % needed definitions
+    \newif\ifleftmargins
+    \newlength{\promptlength}
+
+    % cell style settings
+        \leftmarginsfalse
+
+    
+    % prompt
+    \newcommand{\prompt}[3]{
+        \needspace{1.1cm}
+        \settowidth{\promptlength}{ #1 [#3] }
+        \ifleftmargins\hspace{-\promptlength}\hspace{-5pt}\fi
+        {\color{#2}#1 [#3]:}
+        \ifleftmargins\vspace{-2.7ex}\fi
+    }
+    
+    
+    % environments
+    \newenvironment{OutVerbatim}{\VerbatimEnvironment%
+        \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+            \begin{Verbatim}
+            }{
+            \end{Verbatim}
+        \end{tcolorbox}
+    }
+    
+    %Updated MathJax Compatibility (if future behaviour of the notebook changes this may be removed)
+    \renewcommand{\TeX}{\ifmmode \textrm{\Oldtex} \else \textbackslash TeX \fi}
+    \renewcommand{\LaTeX}{\ifmmode \Oldlatex \else \textbackslash LaTeX \fi}
+    
+    % Header Adjustments
+    \renewcommand{\paragraph}{\textbf}
+    \renewcommand{\subparagraph}[1]{\textit{\textbf{#1}}}
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    \geometry{verbose,tmargin=.5in,bmargin=.7in,lmargin=.5in,rmargin=.5in}
+    
+
+    \begin{document}
+    
+    
+    
+    
+    
+
+    
+    \hypertarget{assignment-2}{%
+\section{Assignment 2}\label{assignment-2}}
+
+    
+\prompt{In}{incolor}{201}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+import numpy as np
+import matplotlib.pyplot as plt
+from numpy import pi, sin
+from textwrap import wrap
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \hypertarget{a-potential-flow}{%
+\subsection{A potential flow}\label{a-potential-flow}}
+
+    
+\prompt{In}{incolor}{221}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+alpha = pi/3
+theta = np.linspace(10**-100, alpha-10**-100, 1000)
+n = 1
+
+fig = plt.figure(dpi = 300)
+ax = fig.add_subplot(111, projection='polar')
+
+for C in range(100):
+    c = C*0.1 # To space out the lines
+    s = sin(n*pi*theta/alpha)
+    r = (C*c*n/s)**(alpha/(n*pi))
+    ax.plot(theta, r)
+
+Title = wrap(r"Stream lines for a non-compessable fluid"
+             r"in a wedge of angle $\frac{\pi}{3}$ rad")
+
+plt.title("\n".join(Title))
+ax.set_thetamin(0)
+ax.set_thetamax(alpha*180/pi)
+ax.set_ylim(0, 10)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{221}
+    
+    $$\left ( 0, \quad 10\right )$$
+
+    
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{contour-intergals-in-electromagnetism}{%
+\subsection{Contour intergals in
+electromagnetism}\label{contour-intergals-in-electromagnetism}}
+
+    
+\prompt{In}{incolor}{70}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+import sympy as sym 
+import sympy.vector
+from sympy import Derivative, symbols, simplify, sqrt, I, factorial, pi
+from sympy.physics.mechanics import *
+init_vprinting()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \hypertarget{integral-that-needs-evaluation}{%
+\subsubsection{Integral that needs
+evaluation}\label{integral-that-needs-evaluation}}
+
+\(\int_0^P \frac{\cos^2u}{[1+C\sin u]^5} du\) =
+\(\frac{2^3}{C^5} \int_0^{2\pi} \frac{(z^2+1)^2 z^2}{(z-z_-)^5(z-z_+)^5} dz\)
+
+    
+\prompt{In}{incolor}{42}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+beta, theta, C, z = symbols('beta theta C z')
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{43}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+# C = beta * cos(theta)
+z_p = (-I + I*sqrt(1-C**2))/C
+z_m = (-I - I*sqrt(1-C**2))/C
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \hypertarget{phiz-fracz2z212z---z_-5}{%
+\paragraph{\texorpdfstring{\(\Phi(z) = \frac{z^2(z^2+1)^2}{(z - z_-)^5}\)}{\textbackslash{}Phi(z) = \textbackslash{}frac\{z\^{}2(z\^{}2+1)\^{}2\}\{(z - z\_-)\^{}5\}}}\label{phiz-fracz2z212z---z_-5}}
+
+    
+\prompt{In}{incolor}{79}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+Coeff = 2**3 / C**5
+IntTop = (z**2 + 1)**2 * z**2
+IntDwn = (z-z_m)**5 * (z-z_p)**5
+Int = IntTop/IntDwn
+Phi = IntTop/(z-z_m)**5
+phi = Phi.simplify()
+phi
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{79}
+    
+    $$\frac{z^{2} \left(z^{2} + 1\right)^{2}}{\left(z - \frac{- i \sqrt{- C^{2} + 1} - i}{C}\right)^{5}}$$
+
+    
+
+    \hypertarget{fracd4dz4-phiz}{%
+\paragraph{\texorpdfstring{\(\frac{d^4}{dz^4} \Phi(z)\)}{\textbackslash{}frac\{d\^{}4\}\{dz\^{}4\} \textbackslash{}Phi(z)}}\label{fracd4dz4-phiz}}
+
+    
+\prompt{In}{incolor}{74}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+D = Derivative(phi, z, 4).doit().simplify()
+D
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{74}
+    
+    $$\frac{24 C^{5} \left(70 C^{4} z^{2} \left(z^{2} + 1\right)^{2} - 70 C^{3} z \left(z^{2} + 1\right) \left(3 z^{2} + 1\right) \left(C z + i \sqrt{- C^{2} + 1} + i\right) + 15 C^{2} \left(4 z^{4} + 10 z^{2} \left(z^{2} + 1\right) + \left(z^{2} + 1\right)^{2}\right) \left(C z + i \sqrt{- C^{2} + 1} + i\right)^{2} - 20 C z \left(5 z^{2} + 2\right) \left(C z + i \sqrt{- C^{2} + 1} + i\right)^{3} + \left(15 z^{2} + 2\right) \left(C z + i \sqrt{- C^{2} + 1} + i\right)^{4}\right)}{\left(C z + i \sqrt{- C^{2} + 1} + i\right)^{9}}$$
+
+    
+
+    \hypertarget{evaluating-fracd4dz4-phiz-at-z-z_}{%
+\paragraph{\texorpdfstring{Evaluating \(\frac{d^4}{dz^4} \Phi(z)\) at
+\(z = z_+\)}{Evaluating \textbackslash{}frac\{d\^{}4\}\{dz\^{}4\} \textbackslash{}Phi(z) at z = z\_+}}\label{evaluating-fracd4dz4-phiz-at-z-z_}}
+
+    
+\prompt{In}{incolor}{78}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+DVal = D.subs(z, z_p).simplify()
+DVal
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{78}
+    
+    $$\frac{3 i C^{5} \left(C^{2} + 4\right)}{8 \sqrt{- C^{2} + 1} \left(C^{6} - 3 C^{4} + 3 C^{2} - 1\right)}$$
+
+    
+
+    \hypertarget{heres-the-residue}{%
+\paragraph{Here's the residue}\label{heres-the-residue}}
+
+\$ \frac{1}{4!} \frac{d^4}{dz^4} \Phi(z\_+)\$
+
+    
+\prompt{In}{incolor}{77}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+Res = DVal / factorial(4)
+Res
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{77}
+    
+    $$\frac{i C^{5} \left(C^{2} + 4\right)}{64 \sqrt{- C^{2} + 1} \left(C^{6} - 3 C^{4} + 3 C^{2} - 1\right)}$$
+
+    
+
+    \hypertarget{value-of-integral}{%
+\paragraph{Value of integral}\label{value-of-integral}}
+
+    
+\prompt{In}{incolor}{65}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+Integral = 2*pi*I*Res * Coeff
+Integral.simplify()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{65}
+    
+    $$- \frac{\pi \left(C^{2} + 4\right)}{4 \sqrt{- C^{2} + 1} \left(C^{6} - 3 C^{4} + 3 C^{2} - 1\right)}$$
+
+    
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
